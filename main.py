@@ -1,4 +1,14 @@
-book_path = "books/frankenstein.txt"
+import sys
+
+
+book_path = sys.argv[1]
+
+def check_if_txt(path):
+    to_check = path.split(".")
+    if to_check[-1] == "txt":
+        return True
+    else:
+        return False
 
 def main():
     with open(book_path) as f:
@@ -36,5 +46,10 @@ def report(dictionary):
     for dictionary in list_letters_ordered_by_count:
         print(f"The '{dictionary["letter"]}' character was found {dictionary["number"]} times")
 
-
-main()
+if len(sys.argv) == 2:
+    if check_if_txt(sys.argv[1]):
+        main()
+    else:
+        print("path does not lead to a .txt file")
+elif len(sys.argv == 1):
+    print("please provide a path to a .txt file")
