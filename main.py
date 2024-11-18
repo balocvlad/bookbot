@@ -1,8 +1,9 @@
+book_path = "books/frankenstein.txt"
+
 def main():
-    with open("books/frankenstein.txt") as f:
+    with open(book_path) as f:
         file_contents = f.read()
-        print(count_words_book(file_contents))
-        print(count_letters(file_contents))
+        report(file_contents)
 
 def count_words_book(book):
     words = book.split()
@@ -19,6 +20,21 @@ def count_letters(book):
                 else:
                     letters[letter] = 1
     return letters
+def sort_letters_by_count(book):
+    list_from_dict = []
+    letters = count_letters(book)
+    for letter in letters:
+        list_from_dict.append(dict([("letter", letter), ("number", letters[letter])]))
+    list_from_dict.sort(reverse = True, key = lambda x: x["number"])
+    return list_from_dict
+
+def report(dictionary):
+    int_words_in_book = count_words_book(dictionary)
+    list_letters_ordered_by_count = sort_letters_by_count(dictionary)
+    print(f"*** Report of {book_path} ***\n")
+    print(f"{int_words_in_book} words in document\n\n")
+    for dictionary in list_letters_ordered_by_count:
+        print(f"The '{dictionary["letter"]}' character was found {dictionary["number"]} times")
 
 
 main()
